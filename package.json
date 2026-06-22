@@ -1,0 +1,19 @@
+{
+  "name": "automation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --ui"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/mcp": "^0.0.75",
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.1",
+    "dotenv": "^17.4.2"
+  }
+}
