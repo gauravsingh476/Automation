@@ -1,11 +1,14 @@
 {
   "name": "automation",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Automation testing suite for SenseHQ messaging and broadcasts",
   "scripts": {
-    "test": "npx playwright test",
-    "test:ui": "npx playwright test --ui"
+    "test": "playwright test",
+    "test:ui": "playwright test --grep @ui",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "report": "playwright show-report",
+    "codegen": "playwright codegen"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +17,7 @@
     "@playwright/mcp": "^0.0.75",
     "@playwright/test": "^1.60.0",
     "@types/node": "^25.9.1",
-    "dotenv": "^17.4.2"
+    "dotenv": "^17.4.2",
+    "typescript": "^6.0.3"
   }
 }

@@ -1,45 +1,45 @@
-import 'dotenv/config';
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
+import * as dotenv from "dotenv";
 
-type EnvironmentVersion = 'pre_prod' | 'prod';
+const envFile = `.env.${process.env.ENV ?? "local"}`;
+dotenv.config({ path: envFile });
 
-const version = (process.env.VERSION || 'pre_prod') as EnvironmentVersion;
+type EnvironmentVersion = "pre_prod" | "prod";
+
+const version = (process.env.VERSION || "pre_prod") as EnvironmentVersion;
 
 const urls = {
-  pre_prod: 'https://multientity.sandbox-preprod.sensehq.com',
-  prod: 'https://multientity.sensehq.com',
+  pre_prod: "https://multientity.sandbox-preprod.sensehq.com",
+  prod: "https://multientity.sensehq.com",
 };
 
-console.log('Version:', version);
-console.log('Base URL:', urls[version]);
+const baseURL = urls[version];
 
 export default defineConfig({
-  testDir: './tests',
-  globalSetup: './global-setup.ts',
+  testDir: "./tests",
+  globalSetup: "./fixtures/authSetup.ts",
+  timeout: 120_000,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
-  timeout: 120_000,
+  reporter: [["html", { open: "never" }], ["list"]],
   expect: { timeout: 15_000 },
 
   use: {
-    baseURL: urls[version],
+    baseURL,
+    storageState: ".auth.json",
     headless: true,
     actionTimeout: 20_000,
     navigationTimeout: 60_000,
-    trace: 'on-first-retry',
+    trace: "on-first-retry",
+    screenshot: "only-on-failure",
   },
 
   projects: [
     {
-      name: 'chromium',
-      testIgnore: /.*\.setup\.ts/,
-      use: {
-        ...devices['Desktop Chrome'],
-        storageState: 'playwright/.auth/user.json',
-      },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
   ],
 });

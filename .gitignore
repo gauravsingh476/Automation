@@ -1,15 +1,11 @@
-
-# Playwright
 node_modules/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-/playwright/.auth/
-/.playwright-mcp/
+playwright-report/
+test-results/
+.env.local
+.auth.json
 
-# Secrets
-.env
+# MCP debug snapshots
+.playwright-mcp/
 
 # Local Claude Code settings
 .claude/settings.local.json
